@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/types/product';
@@ -11,8 +13,14 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const displayImage = product.images[0] || 'https://picsum.photos/400/500';
-  const aiHint = product.category ? product.category.toLowerCase() + " clothing" : "clothing apparel";
+  // Use the first image or a default placeholder if images array is empty or first image is null/undefined
+  const displayImage = product.images && product.images.length > 0 && product.images[0] 
+    ? product.images[0] 
+    : '/assets/img/placeholder.jpg'; 
+
+  const aiHint = product.category ? product.category.toLowerCase() : "clothing";
+  // Limit aiHint to two words if necessary, e.g., by taking the first two words of the category
+  const hintWords = aiHint.split(" ").slice(0, 2).join(" ");
 
 
   return (
@@ -25,7 +33,12 @@ export function ProductCard({ product }: ProductCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover hover:scale-105 transition-transform duration-300"
-            data-ai-hint={aiHint}
+            data-ai-hint={hintWords}
+            onError={(e) => {
+              // Fallback to a generic placeholder if specific image fails
+              e.currentTarget.srcset = '/assets/img/placeholder.jpg';
+              e.currentTarget.src = '/assets/img/placeholder.jpg';
+            }}
           />
            {product.category && (
             <Badge variant="secondary" className="absolute top-2 left-2">
@@ -43,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </CardTitle>
         <p className="text-sm text-muted-foreground mb-2">SKU: {product.sku}</p>
         <p className="text-lg font-semibold text-primary">
-          From ₹{product.priceTiers[0]?.pricePerUnit.toFixed(2) || product.price.toFixed(2)}
+          From ₹{(product.priceTiers && product.priceTiers.length > 0 && product.priceTiers[0]?.pricePerUnit || product.price).toFixed(2)}
           <span className="text-xs text-muted-foreground"> /unit</span>
         </p>
       </CardContent>
