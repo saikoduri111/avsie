@@ -51,7 +51,7 @@ export default function ContactPage() {
             <h3 className="text-lg font-semibold text-foreground">Other Ways to Contact Us</h3>
             <div className="flex items-center gap-3 text-muted-foreground">
               <Mail className="h-5 w-5 text-primary" />
-              <span>support@wholesalehub.example.com</span>
+              <span>support@avsie.example.com</span>
             </div>
             <div className="flex items-center gap-3 text-muted-foreground">
               <Phone className="h-5 w-5 text-primary" />
@@ -60,7 +60,7 @@ export default function ContactPage() {
             <div>
               <WhatsAppButton 
                 phoneNumber={WHATSAPP_PHONE_NUMBER}
-                message="Hello Wholesale Hub, I have a question."
+                message="Hello AVSIE, I have a question."
                 buttonText="Chat on WhatsApp"
                 variant="secondary"
                 className="w-full sm:w-auto"

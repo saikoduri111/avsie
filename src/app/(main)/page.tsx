@@ -14,7 +14,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import fs from 'fs';
 import path from 'path';
 
@@ -25,13 +24,10 @@ export default async function HomePage() {
   const productsJson = fs.readFileSync(productsPath, 'utf8');
   const products: Product[] = JSON.parse(productsJson);
 
-  // Placeholder filter options - in a real app, these would be dynamic
-  const filterOptions = {
-    fabricTypes: ['Cotton', 'Denim', 'Silk', 'Wool', 'Polyester'],
-    colors: ['White', 'Black', 'Navy', 'Blue', 'Red', 'Green', 'Gray', 'Burgundy', 'Cream'],
-    moqRanges: ['1-10', '11-50', '51-100', '100+'],
-    priceRanges: ['₹0-₹2000', '₹2001-₹4000', '₹4001-₹8000', '₹8000+'],
-  };
+  // Read filter options from JSON file
+  const filtersPath = path.join(process.cwd(), 'public/filters.json');
+  const filtersJson = fs.readFileSync(filtersPath, 'utf8');
+  const filterOptions = JSON.parse(filtersJson);
 
 
   return (
@@ -40,7 +36,7 @@ export default async function HomePage() {
       <section className="my-8 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
         <ShoppingBag className="h-12 w-12 text-primary mx-auto mb-4" />
         <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">
-          Welcome to Wholesale Hub!
+          Welcome to AVSIE!
         </h2>
         <p className="text-base sm:text-lg text-foreground mb-2 max-w-2xl mx-auto">
           Your Trusted Partner for Quality Wholesale Clothing in India.
@@ -83,7 +79,7 @@ export default async function HomePage() {
               <div>
                 <h4 className="font-semibold mb-3 text-foreground">Fabric Type</h4>
                 <div className="space-y-2">
-                  {filterOptions.fabricTypes.map((fabric) => (
+                  {filterOptions.fabricTypes.map((fabric: string) => (
                     <div key={fabric} className="flex items-center space-x-2">
                       <Checkbox id={`fabric-${fabric}`} />
                       <Label htmlFor={`fabric-${fabric}`} className="font-normal text-muted-foreground hover:text-foreground cursor-pointer">
@@ -97,7 +93,7 @@ export default async function HomePage() {
               <div>
                 <h4 className="font-semibold mb-3 text-foreground">Color</h4>
                 <div className="space-y-2">
-                  {filterOptions.colors.map((color) => (
+                  {filterOptions.colors.map((color: string) => (
                     <div key={color} className="flex items-center space-x-2">
                       <Checkbox id={`color-${color}`} />
                       <Label htmlFor={`color-${color}`} className="font-normal text-muted-foreground hover:text-foreground cursor-pointer">
@@ -111,7 +107,7 @@ export default async function HomePage() {
               <div>
                 <h4 className="font-semibold mb-3 text-foreground">MOQ Range</h4>
                 <div className="space-y-2">
-                  {filterOptions.moqRanges.map((range) => (
+                  {filterOptions.moqRanges.map((range: string) => (
                     <div key={range} className="flex items-center space-x-2">
                       <Checkbox id={`moq-${range}`} />
                       <Label htmlFor={`moq-${range}`} className="font-normal text-muted-foreground hover:text-foreground cursor-pointer">
@@ -125,7 +121,7 @@ export default async function HomePage() {
               <div>
                 <h4 className="font-semibold mb-3 text-foreground">Price Range (₹)</h4>
                 <div className="space-y-2">
-                  {filterOptions.priceRanges.map((range) => (
+                  {filterOptions.priceRanges.map((range: string) => (
                     <div key={range} className="flex items-center space-x-2">
                       <Checkbox id={`price-${range}`} />
                       <Label htmlFor={`price-${range}`} className="font-normal text-muted-foreground hover:text-foreground cursor-pointer">

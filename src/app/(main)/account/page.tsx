@@ -17,7 +17,7 @@ export default function AccountPage() {
       <Card className="shadow-lg rounded-lg">
         <CardHeader>
           <CardTitle className="text-xl">Welcome, Buyer!</CardTitle>
-          <CardDescription>This is your personal account area. More features coming soon!</CardDescription>
+          <CardDescription>This is your personal account area at AVSIE. More features coming soon!</CardDescription>
         </CardHeader>
         <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
