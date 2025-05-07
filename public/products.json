@@ -2,25 +2,25 @@
 [
   {
     "id": "1",
-    "name": "Classic Cotton Tee",
-    "sku": "CCT-001",
+    "name": "Mastani Silk",
+    "sku": "MST-001",
     "price": 1200.00,
     "priceTiers": [
-      { "minQuantity": 1, "pricePerUnit": 1200.00 },
-      { "minQuantity": 50, "pricePerUnit": 960.00 },
-      { "minQuantity": 200, "pricePerUnit": 800.00 }
+      { "minQuantity": 1, "pricePerUnit": 600.00 },
+      { "minQuantity": 50, "pricePerUnit": 550.00 },
+      { "minQuantity": 200, "pricePerUnit": 500.00 }
     ],
     "minOrderQuantity": 10,
-    "description": "A high-quality classic cotton t-shirt, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.",
+    "description": "A high-quality classic Saree, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.",
     "images": [
-      "/assets/img/avsie_logo.png",
-      "/assets/img/avsie_logo.png",
-      "/assets/img/avsie_logo.png"
+      "/assets/img/mastan_silk.jpg",
+      "/assets/img/mastan_silk.jpg",
+      "/assets/img/mastan_silk.jpg"
     ],
     "fabricDetails": "100% Premium Combed Cotton, 180 GSM",
-    "leadTime": "1-2 weeks",
+    "leadTime": "<2days",
     "category": "Tops",
-    "colors": ["White", "Black", "Navy"]
+    "colors": ["As In Pic"]
   },
   {
     "id": "2",
@@ -39,7 +39,7 @@
       "/assets/img/UDJ-002-2.jpg"
     ],
     "fabricDetails": "98% Cotton, 2% Elastane, 12oz Denim",
-    "leadTime": "2-3 weeks",
+    "leadTime": "<2days",
     "category": "Bottoms",
     "colors": ["Indigo Blue", "Washed Black"]
   },
@@ -62,7 +62,7 @@
       "/assets/img/EMD-003-4.jpg"
     ],
     "fabricDetails": "100% Silk Chiffon, Polyester Lining",
-    "leadTime": "3-4 weeks",
+    "leadTime": "<2days",
     "category": "Dresses",
     "colors": ["Burgundy", "Emerald Green", "Sapphire Blue"]
   },
@@ -83,7 +83,7 @@
       "/assets/img/CKS-004-2.jpg"
     ],
     "fabricDetails": "80% Merino Wool, 20% Acrylic Blend",
-    "leadTime": "2-3 weeks",
+    "leadTime": "<2days",
     "category": "Knitwear",
     "colors": ["Cream", "Charcoal Gray", "Forest Green"]
   },
@@ -105,7 +105,7 @@
       "/assets/img/LBJ-005-3.jpg"
     ],
     "fabricDetails": "100% Polyester Shell, Satin Lining",
-    "leadTime": "2-3 weeks",
+    "leadTime": "<2days",
     "category": "Outerwear",
     "colors": ["Olive Green", "Black", "Burgundy"]
   }
