@@ -36,7 +36,7 @@ export default async function HomePage() {
       <section className="my-8 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
         <ShoppingBag className="h-12 w-12 text-primary mx-auto mb-4" />
         <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">
-          Welcome to AVSIE!
+          Welcome to AVSIE Shopping
         </h2>
         <p className="text-base sm:text-lg text-foreground mb-2 max-w-2xl mx-auto">
           Your Trusted Partner for Quality Wholesale Clothing in India.
@@ -153,3 +153,4 @@ export default async function HomePage() {
     </div>
   );
 }
+

@@ -7,11 +7,16 @@ import { Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const [basePath, setBasePath] = useState('');
+
+  useEffect(() => {
+    // Ensure basePath is set only on the client-side to avoid hydration mismatches
+    setBasePath(process.env.NEXT_PUBLIC_BASE_PATH || '');
+  }, []);
 
   const navLinks = (
     <>
@@ -32,14 +37,17 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20"> {/* Increased height for logo */}
           <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-primary">
-            <Image
-              src={`${basePath}/assets/img/avsie_logo.png`}
-              alt="AVSIE Logo"
-              width={140} // Adjusted width
-              height={40} // Adjusted height
-              className="object-contain"
-              unoptimized
-            />
+            {basePath !== undefined && ( // Conditionally render Image to prevent error if basePath is not yet set
+              <Image
+                src={`${basePath}/assets/img/avsie_logo.png`}
+                alt="AVSIE Logo"
+                width={140} 
+                height={40} 
+                className="object-contain" // Ensures the entire logo is visible and maintains aspect ratio
+                priority // Prioritize loading the logo
+                unoptimized // Necessary for static export
+              />
+            )}
           </Link>
 
           {/* Desktop Navigation */}
@@ -63,14 +71,17 @@ export function Header() {
               <SheetContent side="left" className="w-3/4 sm:w-1/2 bg-card p-6">
                 <div className="flex flex-col space-y-4">
                   <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary mb-6" onClick={() => setIsMobileMenuOpen(false)}>
-                     <Image
-                        src={`${basePath}/assets/img/avsie_logo.png`}
-                        alt="AVSIE Logo"
-                        width={120}
-                        height={35}
-                        className="object-contain"
-                        unoptimized
-                      />
+                     {basePath !== undefined && (
+                       <Image
+                          src={`${basePath}/assets/img/avsie_logo.png`}
+                          alt="AVSIE Logo"
+                          width={120} // Slightly smaller logo for mobile menu
+                          height={35}
+                          className="object-contain"
+                          priority
+                          unoptimized
+                        />
+                     )}
                   </Link>
                   {navLinks}
                   <div className="relative mt-4">
