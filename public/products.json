@@ -1,3 +1,4 @@
+
 [
   {
     "id": "1",
@@ -12,9 +13,9 @@
     "minOrderQuantity": 10,
     "description": "A high-quality classic cotton t-shirt, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.",
     "images": [
-      "https://picsum.photos/seed/cct001_1/600/800",
-      "https://picsum.photos/seed/cct001_2/600/800",
-      "https://picsum.photos/seed/cct001_3/600/800"
+      "/assets/img/CCT-001-1.jpg",
+      "/assets/img/CCT-001-2.jpg",
+      "/assets/img/CCT-001-3.jpg"
     ],
     "fabricDetails": "100% Premium Combed Cotton, 180 GSM",
     "leadTime": "1-2 weeks",
@@ -34,8 +35,8 @@
     "minOrderQuantity": 5,
     "description": "Stylish and durable urban denim jeans with a modern slim fit. Features classic five-pocket styling and reinforced stitching.",
     "images": [
-      "https://picsum.photos/seed/udj002_1/600/800",
-      "https://picsum.photos/seed/udj002_2/600/800"
+      "/assets/img/UDJ-002-1.jpg",
+      "/assets/img/UDJ-002-2.jpg"
     ],
     "fabricDetails": "98% Cotton, 2% Elastane, 12oz Denim",
     "leadTime": "2-3 weeks",
@@ -55,10 +56,10 @@
     "minOrderQuantity": 3,
     "description": "A beautiful and elegant maxi dress, perfect for special occasions or evening wear. Flowy silhouette with intricate detailing.",
     "images": [
-      "https://picsum.photos/seed/emd003_1/600/800",
-      "https://picsum.photos/seed/emd003_2/600/800",
-      "https://picsum.photos/seed/emd003_3/600/800",
-      "https://picsum.photos/seed/emd003_4/600/800"
+      "/assets/img/EMD-003-1.jpg",
+      "/assets/img/EMD-003-2.jpg",
+      "/assets/img/EMD-003-3.jpg",
+      "/assets/img/EMD-003-4.jpg"
     ],
     "fabricDetails": "100% Silk Chiffon, Polyester Lining",
     "leadTime": "3-4 weeks",
@@ -78,8 +79,8 @@
     "minOrderQuantity": 8,
     "description": "A warm and cozy knit sweater, ideal for colder months. Features a timeless cable knit pattern and a comfortable fit.",
     "images": [
-      "https://picsum.photos/seed/cks004_1/600/800",
-      "https://picsum.photos/seed/cks004_2/600/800"
+      "/assets/img/CKS-004-1.jpg",
+      "/assets/img/CKS-004-2.jpg"
     ],
     "fabricDetails": "80% Merino Wool, 20% Acrylic Blend",
     "leadTime": "2-3 weeks",
@@ -99,9 +100,9 @@
     "minOrderQuantity": 6,
     "description": "A versatile lightweight bomber jacket, perfect for transitional weather. Features a sleek design with ribbed cuffs and collar.",
     "images": [
-      "https://picsum.photos/seed/lbj005_1/600/800",
-      "https://picsum.photos/seed/lbj005_2/600/800",
-      "https://picsum.photos/seed/lbj005_3/600/800"
+      "/assets/img/LBJ-005-1.jpg",
+      "/assets/img/LBJ-005-2.jpg",
+      "/assets/img/LBJ-005-3.jpg"
     ],
     "fabricDetails": "100% Polyester Shell, Satin Lining",
     "leadTime": "2-3 weeks",
