@@ -1,7 +1,7 @@
 import { ProductCard } from '@/components/products/product-card';
 import { mockProducts } from '@/lib/mock-data';
 import type { Product } from '@/types/product';
-import { Filter, ListFilter } from 'lucide-react';
+import { Filter, ListFilter, ShoppingBag, ThumbsUp, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -14,7 +14,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Simulate fetching products
 async function getProducts(): Promise<Product[]> {
@@ -37,8 +37,32 @@ export default async function HomePage() {
 
   return (
     <div>
+      {/* Welcome Banner Section */}
+      <section className="mb-12 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
+        <ShoppingBag className="h-12 w-12 text-primary mx-auto mb-4" />
+        <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">
+          Welcome to Wholesale Hub!
+        </h2>
+        <p className="text-base sm:text-lg text-foreground mb-2 max-w-2xl mx-auto">
+          Your Trusted Partner for Quality Wholesale Clothing.
+        </p>
+        <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+          Discover unbeatable prices on premium fabrics, sourced directly for your business needs. We&apos;re committed to helping you succeed with reliable service and exceptional value.
+        </p>
+        <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center">
+                <ThumbsUp className="h-5 w-5 mr-2 text-primary" />
+                <span>Premium Quality Guaranteed</span>
+            </div>
+            <div className="flex items-center">
+                <TrendingUp className="h-5 w-5 mr-2 text-primary" />
+                <span>Competitive Wholesale Pricing</span>
+            </div>
+        </div>
+      </section>
+
       <div className="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Product Catalog</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">Product Catalog</h1>
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline">
@@ -125,7 +149,7 @@ export default async function HomePage() {
       {products.length === 0 ? (
         <p className="text-center text-muted-foreground text-lg py-12">No products found.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
