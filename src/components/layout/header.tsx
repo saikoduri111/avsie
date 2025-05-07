@@ -41,8 +41,8 @@ export function Header() {
               <Image
                 src={`${basePath}/assets/img/avsie_logo.png`}
                 alt="AVSIE Logo"
-                width={140} 
-                height={40} 
+                width={110} 
+                height={30} 
                 className="object-contain" // Ensures the entire logo is visible and maintains aspect ratio
                 priority // Prioritize loading the logo
                 unoptimized // Necessary for static export

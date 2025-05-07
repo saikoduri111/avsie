@@ -5,7 +5,7 @@ import type {NextConfig} from 'next';
 const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
 
 // IMPORTANT: Replace 'firebase-studio' with your actual GitHub repository name
-const repoName = 'firebase-studio'; 
+const repoName = 'avsie'; 
 
 const basePath = isGithubActions ? `/${repoName}` : '';
 
