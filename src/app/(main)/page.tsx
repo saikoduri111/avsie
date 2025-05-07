@@ -1,3 +1,4 @@
+
 import { ProductCard } from '@/components/products/product-card';
 import { mockProducts } from '@/lib/mock-data';
 import type { Product } from '@/types/product';
@@ -15,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollingTopBanner } from '@/components/layout/ScrollingTopBanner'; // New import
 
 // Simulate fetching products
 async function getProducts(): Promise<Product[]> {
@@ -37,8 +39,9 @@ export default async function HomePage() {
 
   return (
     <div>
+      <ScrollingTopBanner />
       {/* Welcome Banner Section */}
-      <section className="mb-12 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
+      <section className="my-8 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
         <ShoppingBag className="h-12 w-12 text-primary mx-auto mb-4" />
         <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">
           Welcome to Wholesale Hub!
@@ -149,7 +152,7 @@ export default async function HomePage() {
       {products.length === 0 ? (
         <p className="text-center text-muted-foreground text-lg py-12">No products found.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

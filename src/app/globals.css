@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -112,4 +113,19 @@ body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Added for scrolling banner */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    /* If content is repeated 3 times, scroll by 1/3 of total width to show the next identical block */
+    transform: translateX(-33.3333%); 
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 40s linear infinite; /* Adjust duration for speed */
 }
