@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Or your default branch
+    branches: [ master ] # Or your default branch
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 # Updated to v4
+        uses: actions/checkout@v4
 
       - name: Detect package manager
         id: detect-package-manager
@@ -30,12 +30,12 @@ jobs:
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
             exit 0
-          elif [ -f "${{ github.workspace }}/package-lock.json" ]; then # Check for package-lock.json for npm
+          elif [ -f "${{ github.workspace }}/package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npm run" >> $GITHUB_OUTPUT # Use npm run for scripts
+            echo "runner=npm run" >> $GITHUB_OUTPUT
             exit 0
-          elif [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then # Check for pnpm-lock.yaml
+          elif [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=pnpm" >> $GITHUB_OUTPUT
@@ -46,7 +46,7 @@ jobs:
           fi
 
       - name: Setup Node
-        uses: actions/setup-node@v4 # Updated to v4
+        uses: actions/setup-node@v4
         with:
           node-version: '18' # Or your preferred Node.js version
           cache: ${{ steps.detect-package-manager.outputs.manager }}
@@ -56,16 +56,12 @@ jobs:
 
       - name: Build
         run: ${{ steps.detect-package-manager.outputs.runner }} build
-
-      # Next.js export step - ensure your build script in package.json creates the 'out' directory
-      # If your build script doesn't include 'next export', you might need:
-      # run: ${{ steps.detect-package-manager.outputs.runner }} export
-      # The current package.json has "build": "next build", so export is needed explicitly
-      # or ensure the `next.config.ts` has `output: 'export'` and `next build` handles it.
-      # Assuming `next build` with `output: 'export'` in config is enough.
+      # The `next build` command will automatically export the static site to the 'out' directory
+      # because `output: 'export'` is configured in `next.config.js`.
+      # No explicit `next export` step is needed.
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3 # Updated to v3
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
@@ -78,4 +74,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # Updated to v4
+        uses: actions/deploy-pages@v4
