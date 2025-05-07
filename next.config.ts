@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     // or set unoptimized: true if using next/image with dynamic sources extensively
     // For picsum.photos, it should work if they are resolved at build time.
     // If issues arise, consider `unoptimized: true` for next/image components.
+    unoptimized: true, // Add this line to disable Image Optimization
     remotePatterns: [
       {
         protocol: 'https',
