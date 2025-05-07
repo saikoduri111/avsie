@@ -1,0 +1,111 @@
+[
+  {
+    "id": "1",
+    "name": "Classic Cotton Tee",
+    "sku": "CCT-001",
+    "price": 1200.00,
+    "priceTiers": [
+      { "minQuantity": 1, "pricePerUnit": 1200.00 },
+      { "minQuantity": 50, "pricePerUnit": 960.00 },
+      { "minQuantity": 200, "pricePerUnit": 800.00 }
+    ],
+    "minOrderQuantity": 10,
+    "description": "A high-quality classic cotton t-shirt, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.",
+    "images": [
+      "https://picsum.photos/seed/cct001_1/600/800",
+      "https://picsum.photos/seed/cct001_2/600/800",
+      "https://picsum.photos/seed/cct001_3/600/800"
+    ],
+    "fabricDetails": "100% Premium Combed Cotton, 180 GSM",
+    "leadTime": "1-2 weeks",
+    "category": "Tops",
+    "colors": ["White", "Black", "Navy"]
+  },
+  {
+    "id": "2",
+    "name": "Urban Denim Jeans",
+    "sku": "UDJ-002",
+    "price": 3600.00,
+    "priceTiers": [
+      { "minQuantity": 1, "pricePerUnit": 3600.00 },
+      { "minQuantity": 25, "pricePerUnit": 3200.00 },
+      { "minQuantity": 100, "pricePerUnit": 2800.00 }
+    ],
+    "minOrderQuantity": 5,
+    "description": "Stylish and durable urban denim jeans with a modern slim fit. Features classic five-pocket styling and reinforced stitching.",
+    "images": [
+      "https://picsum.photos/seed/udj002_1/600/800",
+      "https://picsum.photos/seed/udj002_2/600/800"
+    ],
+    "fabricDetails": "98% Cotton, 2% Elastane, 12oz Denim",
+    "leadTime": "2-3 weeks",
+    "category": "Bottoms",
+    "colors": ["Indigo Blue", "Washed Black"]
+  },
+  {
+    "id": "3",
+    "name": "Elegant Maxi Dress",
+    "sku": "EMD-003",
+    "price": 5600.00,
+    "priceTiers": [
+      { "minQuantity": 1, "pricePerUnit": 5600.00 },
+      { "minQuantity": 10, "pricePerUnit": 5200.00 },
+      { "minQuantity": 50, "pricePerUnit": 4640.00 }
+    ],
+    "minOrderQuantity": 3,
+    "description": "A beautiful and elegant maxi dress, perfect for special occasions or evening wear. Flowy silhouette with intricate detailing.",
+    "images": [
+      "https://picsum.photos/seed/emd003_1/600/800",
+      "https://picsum.photos/seed/emd003_2/600/800",
+      "https://picsum.photos/seed/emd003_3/600/800",
+      "https://picsum.photos/seed/emd003_4/600/800"
+    ],
+    "fabricDetails": "100% Silk Chiffon, Polyester Lining",
+    "leadTime": "3-4 weeks",
+    "category": "Dresses",
+    "colors": ["Burgundy", "Emerald Green", "Sapphire Blue"]
+  },
+  {
+    "id": "4",
+    "name": "Cozy Knit Sweater",
+    "sku": "CKS-004",
+    "price": 4400.00,
+    "priceTiers": [
+      { "minQuantity": 1, "pricePerUnit": 4400.00 },
+      { "minQuantity": 20, "pricePerUnit": 4000.00 },
+      { "minQuantity": 80, "pricePerUnit": 3600.00 }
+    ],
+    "minOrderQuantity": 8,
+    "description": "A warm and cozy knit sweater, ideal for colder months. Features a timeless cable knit pattern and a comfortable fit.",
+    "images": [
+      "https://picsum.photos/seed/cks004_1/600/800",
+      "https://picsum.photos/seed/cks004_2/600/800"
+    ],
+    "fabricDetails": "80% Merino Wool, 20% Acrylic Blend",
+    "leadTime": "2-3 weeks",
+    "category": "Knitwear",
+    "colors": ["Cream", "Charcoal Gray", "Forest Green"]
+  },
+  {
+    "id": "5",
+    "name": "Lightweight Bomber Jacket",
+    "sku": "LBJ-005",
+    "price": 4800.00,
+    "priceTiers": [
+      { "minQuantity": 1, "pricePerUnit": 4800.00 },
+      { "minQuantity": 15, "pricePerUnit": 4400.00 },
+      { "minQuantity": 60, "pricePerUnit": 4000.00 }
+    ],
+    "minOrderQuantity": 6,
+    "description": "A versatile lightweight bomber jacket, perfect for transitional weather. Features a sleek design with ribbed cuffs and collar.",
+    "images": [
+      "https://picsum.photos/seed/lbj005_1/600/800",
+      "https://picsum.photos/seed/lbj005_2/600/800",
+      "https://picsum.photos/seed/lbj005_3/600/800"
+    ],
+    "fabricDetails": "100% Polyester Shell, Satin Lining",
+    "leadTime": "2-3 weeks",
+    "category": "Outerwear",
+    "colors": ["Olive Green", "Black", "Burgundy"]
+  }
+]

@@ -1,6 +1,5 @@
 
 import { ProductCard } from '@/components/products/product-card';
-import { mockProducts } from '@/lib/mock-data';
 import type { Product } from '@/types/product';
 import { Filter, ListFilter, ShoppingBag, ThumbsUp, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,17 +15,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ScrollingTopBanner } from '@/components/layout/ScrollingTopBanner'; // New import
-
-// Simulate fetching products
-async function getProducts(): Promise<Product[]> {
-  // In a real app, this would be an API call
-  return Promise.resolve(mockProducts);
-}
+import fs from 'fs';
+import path from 'path';
 
 
 export default async function HomePage() {
-  const products = await getProducts();
+  // Read products from JSON file
+  const productsPath = path.join(process.cwd(), 'public/products.json');
+  const productsJson = fs.readFileSync(productsPath, 'utf8');
+  const products: Product[] = JSON.parse(productsJson);
 
   // Placeholder filter options - in a real app, these would be dynamic
   const filterOptions = {
@@ -39,7 +36,6 @@ export default async function HomePage() {
 
   return (
     <div>
-      <ScrollingTopBanner />
       {/* Welcome Banner Section */}
       <section className="my-8 text-center bg-card p-6 sm:p-8 rounded-lg shadow-lg border border-border">
         <ShoppingBag className="h-12 w-12 text-primary mx-auto mb-4" />

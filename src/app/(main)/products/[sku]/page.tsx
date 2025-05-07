@@ -1,4 +1,5 @@
-import { mockProducts, WHATSAPP_PHONE_NUMBER } from '@/lib/mock-data';
+
+import { WHATSAPP_PHONE_NUMBER } from '@/lib/mock-data';
 import type { Product } from '@/types/product';
 import { ProductImageGallery } from '@/components/products/product-image-gallery';
 import { BulkOrderForm } from '@/components/orders/bulk-order-form';
@@ -6,27 +7,31 @@ import { WhatsAppButton } from '@/components/common/whatsapp-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Info, Package, Palette, ShoppingBag, Tag, Truck, Users } from 'lucide-react';
+import { Info, Package, Palette, ShoppingBag, Tag, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import fs from 'fs';
+import path from 'path';
 
 interface ProductPageParams {
   sku: string;
 }
 
-// Simulate fetching a single product by SKU
-async function getProductBySku(sku: string): Promise<Product | undefined> {
-  return Promise.resolve(mockProducts.find(p => p.sku === sku));
-}
-
 export async function generateStaticParams() {
-  return mockProducts.map(product => ({
+  const productsPath = path.join(process.cwd(), 'public/products.json');
+  const productsJson = fs.readFileSync(productsPath, 'utf8');
+  const products: Product[] = JSON.parse(productsJson);
+  
+  return products.map(product => ({
     sku: product.sku,
   }));
 }
 
 export default async function ProductPage({ params }: { params: ProductPageParams }) {
-  const product = await getProductBySku(params.sku);
+  const productsPath = path.join(process.cwd(), 'public/products.json');
+  const productsJson = fs.readFileSync(productsPath, 'utf8');
+  const products: Product[] = JSON.parse(productsJson);
+  const product = products.find(p => p.sku === params.sku);
 
   if (!product) {
     return (
