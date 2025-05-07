@@ -1,0 +1,79 @@
+on:
+  push:
+    branches: [ master ] # Or your default branch
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # Updated to v4
+
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "${{ github.workspace }}/package-lock.json" ]; then # Check for package-lock.json for npm
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npm run" >> $GITHUB_OUTPUT # Use npm run for scripts
+            exit 0
+          elif [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then # Check for pnpm-lock.yaml
+            echo "manager=pnpm" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            echo "runner=pnpm" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4 # Updated to v4
+        with:
+          node-version: '18' # Or your preferred Node.js version
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Build
+        run: ${{ steps.detect-package-manager.outputs.runner }} build
+
+      # Next.js export step - ensure your build script in package.json creates the 'out' directory
+      # If your build script doesn't include 'next export', you might need:
+      # run: ${{ steps.detect-package-manager.outputs.runner }} export
+      # The current package.json has "build": "next build", so export is needed explicitly
+      # or ensure the `next.config.ts` has `output: 'export'` and `next build` handles it.
+      # Assuming `next build` with `output: 'export'` in config is enough.
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3 # Updated to v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Updated to v4
+
