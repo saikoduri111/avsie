@@ -1,9 +1,23 @@
 
 import type {NextConfig} from 'next';
 
+// Determine if the build is running in GitHub Actions
+const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
+
+// IMPORTANT: Replace 'firebase-studio' with your actual GitHub repository name
+// This is used to set the basePath for GitHub Pages deployment.
+// For example, if your GitHub Pages URL is https://your-username.github.io/my-cool-site,
+// then repoName should be 'my-cool-site'.
+// If you are deploying to a custom domain or to the root of your-username.github.io,
+// set repoName to an empty string '' or remove/comment out basePath and assetPrefix.
+const repoName = 'firebase-studio'; 
+
 const nextConfig: NextConfig = {
-  output: 'export', // Add this line for static exports
-  /* config options here */
+  output: 'export',
+  // Set basePath and assetPrefix only for GitHub Pages deployment
+  basePath: isGithubActions ? `/${repoName}` : '',
+  assetPrefix: isGithubActions ? `/${repoName}/` : undefined, // assetPrefix needs a trailing slash
+  
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -11,11 +25,11 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    // When using output: 'export', you might need to configure images differently
-    // or set unoptimized: true if using next/image with dynamic sources extensively
-    // For picsum.photos, it should work if they are resolved at build time.
-    // If issues arise, consider `unoptimized: true` for next/image components.
-    unoptimized: true, // Add this line to disable Image Optimization
+    // Image Optimization is not compatible with `output: 'export'` by default.
+    // `unoptimized: true` disables the Image Optimization API and allows images to work with static exports.
+    unoptimized: true,
+    // remotePatterns are not needed for local images in the /public directory
+    // but are kept here in case picsum.photos placeholders are used elsewhere or in the future.
     remotePatterns: [
       {
         protocol: 'https',
