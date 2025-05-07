@@ -55,7 +55,7 @@ export default function ContactPage() {
             </div>
             <div className="flex items-center gap-3 text-muted-foreground">
               <Phone className="h-5 w-5 text-primary" />
-              <span>+1 (555) 123-4567</span>
+              <span>+91 98765 43210</span>
             </div>
             <div>
               <WhatsAppButton 

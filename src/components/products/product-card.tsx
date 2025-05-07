@@ -43,7 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </CardTitle>
         <p className="text-sm text-muted-foreground mb-2">SKU: {product.sku}</p>
         <p className="text-lg font-semibold text-primary">
-          From ${product.priceTiers[0]?.pricePerUnit.toFixed(2) || product.price.toFixed(2)}
+          From ₹{product.priceTiers[0]?.pricePerUnit.toFixed(2) || product.price.toFixed(2)}
           <span className="text-xs text-muted-foreground"> /unit</span>
         </p>
       </CardContent>

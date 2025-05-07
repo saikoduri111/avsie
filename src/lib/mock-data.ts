@@ -5,11 +5,11 @@ export const mockProducts: Product[] = [
     id: '1',
     name: 'Classic Cotton Tee',
     sku: 'CCT-001',
-    price: 15.00,
+    price: 1200.00, // Approx 15 USD * 80
     priceTiers: [
-      { minQuantity: 1, pricePerUnit: 15.00 },
-      { minQuantity: 50, pricePerUnit: 12.00 },
-      { minQuantity: 200, pricePerUnit: 10.00 },
+      { minQuantity: 1, pricePerUnit: 1200.00 },
+      { minQuantity: 50, pricePerUnit: 960.00 }, // Approx 12 USD * 80
+      { minQuantity: 200, pricePerUnit: 800.00 }, // Approx 10 USD * 80
     ],
     minOrderQuantity: 10,
     description: 'A high-quality classic cotton t-shirt, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.',
@@ -27,11 +27,11 @@ export const mockProducts: Product[] = [
     id: '2',
     name: 'Urban Denim Jeans',
     sku: 'UDJ-002',
-    price: 45.00,
+    price: 3600.00, // Approx 45 USD * 80
     priceTiers: [
-      { minQuantity: 1, pricePerUnit: 45.00 },
-      { minQuantity: 25, pricePerUnit: 40.00 },
-      { minQuantity: 100, pricePerUnit: 35.00 },
+      { minQuantity: 1, pricePerUnit: 3600.00 },
+      { minQuantity: 25, pricePerUnit: 3200.00 }, // Approx 40 USD * 80
+      { minQuantity: 100, pricePerUnit: 2800.00 }, // Approx 35 USD * 80
     ],
     minOrderQuantity: 5,
     description: 'Stylish and durable urban denim jeans with a modern slim fit. Features classic five-pocket styling and reinforced stitching.',
@@ -48,11 +48,11 @@ export const mockProducts: Product[] = [
     id: '3',
     name: 'Elegant Maxi Dress',
     sku: 'EMD-003',
-    price: 70.00,
+    price: 5600.00, // Approx 70 USD * 80
     priceTiers: [
-      { minQuantity: 1, pricePerUnit: 70.00 },
-      { minQuantity: 10, pricePerUnit: 65.00 },
-      { minQuantity: 50, pricePerUnit: 58.00 },
+      { minQuantity: 1, pricePerUnit: 5600.00 },
+      { minQuantity: 10, pricePerUnit: 5200.00 }, // Approx 65 USD * 80
+      { minQuantity: 50, pricePerUnit: 4640.00 }, // Approx 58 USD * 80
     ],
     minOrderQuantity: 3,
     description: 'A beautiful and elegant maxi dress, perfect for special occasions or evening wear. Flowy silhouette with intricate detailing.',
@@ -71,11 +71,11 @@ export const mockProducts: Product[] = [
     id: '4',
     name: 'Cozy Knit Sweater',
     sku: 'CKS-004',
-    price: 55.00,
+    price: 4400.00, // Approx 55 USD * 80
     priceTiers: [
-      { minQuantity: 1, pricePerUnit: 55.00 },
-      { minQuantity: 20, pricePerUnit: 50.00 },
-      { minQuantity: 80, pricePerUnit: 45.00 },
+      { minQuantity: 1, pricePerUnit: 4400.00 },
+      { minQuantity: 20, pricePerUnit: 4000.00 }, // Approx 50 USD * 80
+      { minQuantity: 80, pricePerUnit: 3600.00 }, // Approx 45 USD * 80
     ],
     minOrderQuantity: 8,
     description: 'A warm and cozy knit sweater, ideal for colder months. Features a timeless cable knit pattern and a comfortable fit.',
@@ -92,11 +92,11 @@ export const mockProducts: Product[] = [
     id: '5',
     name: 'Lightweight Bomber Jacket',
     sku: 'LBJ-005',
-    price: 60.00,
+    price: 4800.00, // Approx 60 USD * 80
     priceTiers: [
-      { minQuantity: 1, pricePerUnit: 60.00 },
-      { minQuantity: 15, pricePerUnit: 55.00 },
-      { minQuantity: 60, pricePerUnit: 50.00 },
+      { minQuantity: 1, pricePerUnit: 4800.00 },
+      { minQuantity: 15, pricePerUnit: 4400.00 }, // Approx 55 USD * 80
+      { minQuantity: 60, pricePerUnit: 4000.00 }, // Approx 50 USD * 80
     ],
     minOrderQuantity: 6,
     description: 'A versatile lightweight bomber jacket, perfect for transitional weather. Features a sleek design with ribbed cuffs and collar.',
@@ -112,4 +112,4 @@ export const mockProducts: Product[] = [
   },
 ];
 
-export const WHATSAPP_PHONE_NUMBER = "12345678900"; // Replace with actual number, include country code without + or 00
+export const WHATSAPP_PHONE_NUMBER = "919876543210"; // Placeholder Indian phone number (without +)

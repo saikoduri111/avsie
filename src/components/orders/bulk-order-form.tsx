@@ -33,7 +33,7 @@ export function BulkOrderForm({ product }: BulkOrderFormProps) {
         // For simplicity, let's assume the first tier is the base or slightly above MOQ.
         // If priceTiers exist, use the price of the lowest tier if quantity is below its minQuantity but meets overall MOQ.
         // A more robust logic might pick the product.price if quantity < lowest_tier.minQuantity
-        currentPerUnitCost = product.priceTiers[0].pricePerUnit; 
+        currentPerUnitCost = product.priceTiers.sort((a,b) => a.minQuantity - b.minQuantity)[0].pricePerUnit; 
       }
     }
     
@@ -70,7 +70,7 @@ export function BulkOrderForm({ product }: BulkOrderFormProps) {
       });
       return;
     }
-    const message = `I would like to order ${quantity} units of ${product.name} (SKU: ${product.sku}) at $${perUnitCost.toFixed(2)} per unit. Total: $${totalPrice.toFixed(2)}.`;
+    const message = `I would like to order ${quantity} units of ${product.name} (SKU: ${product.sku}) at ₹${perUnitCost.toFixed(2)} per unit. Total: ₹${totalPrice.toFixed(2)}.`;
     const whatsappUrl = generateWhatsAppUrl(WHATSAPP_PHONE_NUMBER, message);
     window.open(whatsappUrl, '_blank');
   };
@@ -118,7 +118,7 @@ export function BulkOrderForm({ product }: BulkOrderFormProps) {
             <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
               {product.priceTiers.sort((a,b) => a.minQuantity - b.minQuantity).map((tier) => (
                 <li key={tier.minQuantity} className={quantity >= tier.minQuantity ? 'font-medium text-primary' : ''}>
-                  {tier.minQuantity}+ units: ${tier.pricePerUnit.toFixed(2)}/unit
+                  {tier.minQuantity}+ units: ₹{tier.pricePerUnit.toFixed(2)}/unit
                 </li>
               ))}
             </ul>
@@ -128,11 +128,11 @@ export function BulkOrderForm({ product }: BulkOrderFormProps) {
         <div className="space-y-3 pt-4 border-t">
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Price Per Unit:</span>
-            <span className="font-semibold text-lg text-primary">${perUnitCost.toFixed(2)}</span>
+            <span className="font-semibold text-lg text-primary">₹{perUnitCost.toFixed(2)}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Total Price:</span>
-            <span className="font-bold text-2xl text-primary">${totalPrice.toFixed(2)}</span>
+            <span className="font-bold text-2xl text-primary">₹{totalPrice.toFixed(2)}</span>
           </div>
         </div>
       </CardContent>

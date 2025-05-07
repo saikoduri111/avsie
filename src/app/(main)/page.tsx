@@ -33,7 +33,7 @@ export default async function HomePage() {
     fabricTypes: ['Cotton', 'Denim', 'Silk', 'Wool', 'Polyester'],
     colors: ['White', 'Black', 'Navy', 'Blue', 'Red', 'Green', 'Gray', 'Burgundy', 'Cream'],
     moqRanges: ['1-10', '11-50', '51-100', '100+'],
-    priceRanges: ['$0-$25', '$26-$50', '$51-$100', '$100+'],
+    priceRanges: ['₹0-₹2000', '₹2001-₹4000', '₹4001-₹8000', '₹8000+'],
   };
 
 
@@ -47,7 +47,7 @@ export default async function HomePage() {
           Welcome to Wholesale Hub!
         </h2>
         <p className="text-base sm:text-lg text-foreground mb-2 max-w-2xl mx-auto">
-          Your Trusted Partner for Quality Wholesale Clothing.
+          Your Trusted Partner for Quality Wholesale Clothing in India.
         </p>
         <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
           Discover unbeatable prices on premium fabrics, sourced directly for your business needs. We&apos;re committed to helping you succeed with reliable service and exceptional value.
@@ -127,7 +127,7 @@ export default async function HomePage() {
               </div>
               <hr/>
               <div>
-                <h4 className="font-semibold mb-3 text-foreground">Price Range</h4>
+                <h4 className="font-semibold mb-3 text-foreground">Price Range (₹)</h4>
                 <div className="space-y-2">
                   {filterOptions.priceRanges.map((range) => (
                     <div key={range} className="flex items-center space-x-2">
@@ -138,8 +138,8 @@ export default async function HomePage() {
                     </div>
                   ))}
                   <div className="flex gap-2 pt-2">
-                    <Input type="number" placeholder="Min" className="w-1/2"/>
-                    <Input type="number" placeholder="Max" className="w-1/2"/>
+                    <Input type="number" placeholder="Min (₹)" className="w-1/2"/>
+                    <Input type="number" placeholder="Max (₹)" className="w-1/2"/>
                   </div>
                 </div>
               </div>

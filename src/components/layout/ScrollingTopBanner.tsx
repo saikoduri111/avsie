@@ -24,9 +24,8 @@ export const ScrollingTopBanner = () => {
         <div className="inline-block animate-scroll-left">
           {/* Repeat the content unit for a seamless scrolling effect.
               The animation scrolls by the width of one content unit.
-              If 3 units are present, translateX(-33.3333%) scrolls one unit.
+              If 2 units are present, translateX(-50%) scrolls one unit.
           */}
-          {contentUnit}
           {contentUnit}
           {contentUnit}
         </div>
