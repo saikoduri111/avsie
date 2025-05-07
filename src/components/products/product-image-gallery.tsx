@@ -11,43 +11,43 @@ interface ProductImageGalleryProps {
   productName: string;
 }
 
-export function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  const placeholderImagePath = `${basePath}/assets/img/placeholder.jpg`; // Ensure this placeholder exists and is a valid image
+const ROOT_RELATIVE_PLACEHOLDER_PATH_GALLERY = '/assets/img/placeholder.jpg';
 
-  const [selectedImage, setSelectedImage] = useState(placeholderImagePath);
+export function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
+  // Determine initial valid images or use placeholder
+  const getValidInitialImages = (imgArray: string[] | undefined) => {
+    if (imgArray && imgArray.length > 0 && imgArray.every(img => typeof img === 'string')) {
+      return imgArray;
+    }
+    return [ROOT_RELATIVE_PLACEHOLDER_PATH_GALLERY];
+  };
+
+  const [galleryDisplayImages, setGalleryDisplayImages] = useState<string[]>(getValidInitialImages(images));
+  const [selectedImageSrc, setSelectedImageSrc] = useState<string>(galleryDisplayImages[0]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentImages, setCurrentImages] = useState<string[]>([]);
 
   useEffect(() => {
-    if (images && images.length > 0 && images.every(img => typeof img === 'string')) {
-      setSelectedImage(images[0]);
-      setCurrentImages(images);
-    } else {
-      setSelectedImage(placeholderImagePath); // Use the basePath-aware placeholder
-      setCurrentImages([placeholderImagePath]);
-    }
-    setIsLoading(true); 
-  }, [images, placeholderImagePath]);
+    const newValidImages = getValidInitialImages(images);
+    setGalleryDisplayImages(newValidImages);
+    setSelectedImageSrc(newValidImages[0]);
+    setIsLoading(true); // Assume new image will load
+  }, [images]);
 
   const handleImageLoad = () => {
     setIsLoading(false);
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, isThumbnail = false) => {
-    setIsLoading(false);
-    if (!isThumbnail && selectedImage !== placeholderImagePath) {
-      setSelectedImage(placeholderImagePath);
+  const handleMainImageError = () => {
+    if (selectedImageSrc !== ROOT_RELATIVE_PLACEHOLDER_PATH_GALLERY) {
+      setSelectedImageSrc(ROOT_RELATIVE_PLACEHOLDER_PATH_GALLERY);
     }
-    // For thumbnails, if one fails, it will show a broken image icon.
-    // Optionally, replace broken thumbnail source as well:
-    // if (isThumbnail) e.currentTarget.src = placeholderImagePath;
+    setIsLoading(false);
   };
   
-  // Determine initial images for the gallery, ensuring placeholder is used if primary images are invalid
-  const galleryImages = currentImages.length > 0 && currentImages.every(img => typeof img === 'string') ? currentImages : [placeholderImagePath];
-  const mainDisplayImage = (images && images.length > 0 && typeof images[0] === 'string') ? selectedImage : placeholderImagePath;
-
+  // Optional: Handler for thumbnail errors, can replace src or let browser show broken image
+  // const handleThumbnailError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  //   (e.target as HTMLImageElement).src = ROOT_RELATIVE_PLACEHOLDER_PATH_GALLERY;
+  // };
 
   return (
     <div className="flex flex-col gap-4">
@@ -58,45 +58,48 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               <div className="absolute inset-0 bg-muted animate-pulse z-0" />
             )}
             <Image
-              src={mainDisplayImage}
+              key={selectedImageSrc} // Force re-render on src change, helpful for error fallback
+              src={selectedImageSrc}
               alt={`Main image of ${productName}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-opacity duration-300 z-10"
-              priority={true} 
+              priority={true}
               onLoad={handleImageLoad}
-              onError={(e) => handleImageError(e, false)}
+              onError={handleMainImageError}
+              unoptimized={true}
               data-ai-hint="product image"
             />
           </div>
         </CardContent>
       </Card>
-      {galleryImages.length > 1 && ( 
+      {galleryDisplayImages.length > 1 && ( // Only show thumbnails if more than one image (or if the single image isn't the placeholder)
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-          {galleryImages.map((image, index) => (
+          {galleryDisplayImages.map((imageSrc, index) => (
             <button
               key={index}
-              onClick={() => { 
-                if (selectedImage !== image) { 
-                  setIsLoading(true); 
-                  setSelectedImage(image);
+              onClick={() => {
+                if (selectedImageSrc !== imageSrc) {
+                  setIsLoading(true);
+                  setSelectedImageSrc(imageSrc);
                 }
               }}
               className={cn(
                 'aspect-square rounded-md overflow-hidden border-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all',
-                selectedImage === image ? 'border-primary shadow-md' : 'border-border hover:border-muted-foreground'
+                selectedImageSrc === imageSrc ? 'border-primary shadow-md' : 'border-border hover:border-muted-foreground'
               )}
               aria-label={`View image ${index + 1} of ${productName}`}
             >
               <div className="relative w-full h-full">
                 <Image
-                  src={image}
+                  src={imageSrc}
                   alt={`Thumbnail ${index + 1} of ${productName}`}
                   fill
                   sizes="20vw"
                   className="object-cover"
                   data-ai-hint="thumbnail image"
-                  onError={(e) => handleImageError(e, true)}
+                  unoptimized={true}
+                  // onError={handleThumbnailError} // Uncomment to handle thumbnail errors
                 />
               </div>
             </button>

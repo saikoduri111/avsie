@@ -8,40 +8,57 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Shirt } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface ProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  const placeholderImagePath = `${basePath}/assets/img/placeholder.jpg`;
+const ROOT_RELATIVE_PLACEHOLDER_PATH = '/assets/img/placeholder.jpg';
 
-  const displayImage = product.images && product.images.length > 0 && product.images[0] 
-    ? product.images[0] 
-    : '/assets/img/placeholder.jpg'; // Initial src path
+export function ProductCard({ product }: ProductCardProps) {
+  const initialImageSrc = product.images && product.images.length > 0 && product.images[0]
+    ? product.images[0] // This is e.g., /assets/img/CCT-001-1.jpg
+    : ROOT_RELATIVE_PLACEHOLDER_PATH;
+
+  const [currentImageSrc, setCurrentImageSrc] = useState(initialImageSrc);
+
+  // Update image src if product prop changes or if currentImageSrc was a placeholder and a real image is now available.
+  useEffect(() => {
+    const newInitialSrc = product.images && product.images.length > 0 && product.images[0]
+      ? product.images[0]
+      : ROOT_RELATIVE_PLACEHOLDER_PATH;
+    
+    // Only update if the fundamental src has changed, or if it was a placeholder and might now be a real image
+    if (newInitialSrc !== currentImageSrc || currentImageSrc === ROOT_RELATIVE_PLACEHOLDER_PATH) {
+       setCurrentImageSrc(newInitialSrc);
+    }
+  }, [product, currentImageSrc]); // currentImageSrc in dependency to re-evaluate if it was a placeholder
+
+  const handleError = () => {
+    // Avoid infinite loop if placeholder itself fails, though unlikely if placeholder is valid
+    if (currentImageSrc !== ROOT_RELATIVE_PLACEHOLDER_PATH) {
+      setCurrentImageSrc(ROOT_RELATIVE_PLACEHOLDER_PATH);
+    }
+  };
 
   const aiHint = product.category ? product.category.toLowerCase() : "clothing";
   const hintWords = aiHint.split(" ").slice(0, 2).join(" ");
-
 
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full rounded-lg">
       <CardHeader className="p-0">
         <Link href={`/products/${product.sku}`} className="block aspect-[4/5] relative w-full overflow-hidden">
           <Image
-            src={displayImage}
+            key={currentImageSrc} // Add key to help React differentiate if src changes to placeholder
+            src={currentImageSrc}
             alt={`Image of ${product.name}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover hover:scale-105 transition-transform duration-300"
             data-ai-hint={hintWords}
-            onError={(e) => {
-              // Fallback to a generic placeholder if specific image fails
-              // Ensure placeholder.jpg exists and is a valid image in public/assets/img/
-              e.currentTarget.srcset = placeholderImagePath;
-              e.currentTarget.src = placeholderImagePath;
-            }}
+            onError={handleError}
+            unoptimized={true} // Explicitly set, should be picked from config too
           />
            {product.category && (
             <Badge variant="secondary" className="absolute top-2 left-2">
@@ -59,7 +76,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </CardTitle>
         <p className="text-sm text-muted-foreground mb-2">SKU: {product.sku}</p>
         <p className="text-lg font-semibold text-primary">
-          From ₹{(product.priceTiers && product.priceTiers.length > 0 && product.priceTiers[0]?.pricePerUnit || product.price).toFixed(2)}
+          From ₹{(product.priceTiers && product.priceTiers.length > 0 && product.priceTiers.sort((a,b) => a.minQuantity - b.minQuantity)[0]?.pricePerUnit || product.price).toFixed(2)}
           <span className="text-xs text-muted-foreground"> /unit</span>
         </p>
       </CardContent>
