@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -13,13 +14,14 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  // Use the first image or a default placeholder if images array is empty or first image is null/undefined
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const placeholderImagePath = `${basePath}/assets/img/placeholder.jpg`;
+
   const displayImage = product.images && product.images.length > 0 && product.images[0] 
     ? product.images[0] 
-    : '/assets/img/placeholder.jpg'; 
+    : '/assets/img/placeholder.jpg'; // Initial src path
 
   const aiHint = product.category ? product.category.toLowerCase() : "clothing";
-  // Limit aiHint to two words if necessary, e.g., by taking the first two words of the category
   const hintWords = aiHint.split(" ").slice(0, 2).join(" ");
 
 
@@ -36,8 +38,9 @@ export function ProductCard({ product }: ProductCardProps) {
             data-ai-hint={hintWords}
             onError={(e) => {
               // Fallback to a generic placeholder if specific image fails
-              e.currentTarget.srcset = '/assets/img/placeholder.jpg';
-              e.currentTarget.src = '/assets/img/placeholder.jpg';
+              // Ensure placeholder.jpg exists and is a valid image in public/assets/img/
+              e.currentTarget.srcset = placeholderImagePath;
+              e.currentTarget.src = placeholderImagePath;
             }}
           />
            {product.category && (

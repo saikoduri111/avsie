@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -10,59 +11,42 @@ interface ProductImageGalleryProps {
   productName: string;
 }
 
-const PLACEHOLDER_IMAGE = '/assets/img/placeholder.jpg'; // Ensure this placeholder exists
-
 export function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
-  const [selectedImage, setSelectedImage] = useState(PLACEHOLDER_IMAGE);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const placeholderImagePath = `${basePath}/assets/img/placeholder.jpg`; // Ensure this placeholder exists and is a valid image
+
+  const [selectedImage, setSelectedImage] = useState(placeholderImagePath);
   const [isLoading, setIsLoading] = useState(true);
   const [currentImages, setCurrentImages] = useState<string[]>([]);
 
   useEffect(() => {
-    if (images && images.length > 0) {
+    if (images && images.length > 0 && images.every(img => typeof img === 'string')) {
       setSelectedImage(images[0]);
       setCurrentImages(images);
     } else {
-      setSelectedImage(PLACEHOLDER_IMAGE);
-      setCurrentImages([PLACEHOLDER_IMAGE]);
+      setSelectedImage(placeholderImagePath); // Use the basePath-aware placeholder
+      setCurrentImages([placeholderImagePath]);
     }
-    setIsLoading(true); // Reset loading state when images change
-  }, [images]);
+    setIsLoading(true); 
+  }, [images, placeholderImagePath]);
 
   const handleImageLoad = () => {
     setIsLoading(false);
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, isThumbnail = false) => {
     setIsLoading(false);
-    // If the selected image fails to load, try to set it to the generic placeholder
-    // This also helps if the image path in JSON is incorrect.
-    if (selectedImage !== PLACEHOLDER_IMAGE) {
-      setSelectedImage(PLACEHOLDER_IMAGE);
+    if (!isThumbnail && selectedImage !== placeholderImagePath) {
+      setSelectedImage(placeholderImagePath);
     }
     // For thumbnails, if one fails, it will show a broken image icon.
-    // We could replace it with a placeholder too, but it might be less informative.
-    // e.currentTarget.src = PLACEHOLDER_IMAGE; // Optional: replace broken thumbnail
+    // Optionally, replace broken thumbnail source as well:
+    // if (isThumbnail) e.currentTarget.src = placeholderImagePath;
   };
   
-  if (!currentImages || currentImages.length === 0) {
-     // This case should ideally be covered by the useEffect setting currentImages to [PLACEHOLDER_IMAGE]
-    return (
-      <Card className="overflow-hidden shadow-lg">
-        <CardContent className="p-0">
-          <div className="aspect-[3/4] w-full bg-muted flex items-center justify-center">
-            <Image
-                src={PLACEHOLDER_IMAGE}
-                alt={`Placeholder image for ${productName}`}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover"
-                data-ai-hint="product placeholder"
-              />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
+  // Determine initial images for the gallery, ensuring placeholder is used if primary images are invalid
+  const galleryImages = currentImages.length > 0 && currentImages.every(img => typeof img === 'string') ? currentImages : [placeholderImagePath];
+  const mainDisplayImage = (images && images.length > 0 && typeof images[0] === 'string') ? selectedImage : placeholderImagePath;
 
 
   return (
@@ -74,26 +58,26 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               <div className="absolute inset-0 bg-muted animate-pulse z-0" />
             )}
             <Image
-              src={selectedImage}
+              src={mainDisplayImage}
               alt={`Main image of ${productName}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-opacity duration-300 z-10"
               priority={true} 
               onLoad={handleImageLoad}
-              onError={handleImageError}
+              onError={(e) => handleImageError(e, false)}
               data-ai-hint="product image"
             />
           </div>
         </CardContent>
       </Card>
-      {currentImages.length > 1 && ( // Show thumbnails only if there's more than one image (even if it's a placeholder + others)
+      {galleryImages.length > 1 && ( 
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-          {currentImages.map((image, index) => (
+          {galleryImages.map((image, index) => (
             <button
               key={index}
               onClick={() => { 
-                if (selectedImage !== image) { // Only update if different image
+                if (selectedImage !== image) { 
                   setIsLoading(true); 
                   setSelectedImage(image);
                 }
@@ -112,7 +96,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
                   sizes="20vw"
                   className="object-cover"
                   data-ai-hint="thumbnail image"
-                  onError={handleImageError} // Handle errors for thumbnails too
+                  onError={(e) => handleImageError(e, true)}
                 />
               </div>
             </button>
