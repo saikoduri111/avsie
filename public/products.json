@@ -13,9 +13,9 @@
     "minOrderQuantity": 10,
     "description": "A high-quality classic Saree, perfect for everyday wear or for printing custom designs. Soft, durable, and comfortable.",
     "images": [
-      "/assets/img/mastan_silk.jpg",
-      "/assets/img/mastan_silk.jpg",
-      "/assets/img/mastan_silk.jpg"
+      "avsie/assets/img/mastan_silk.jpg",
+      "avsie/assets/img/mastan_silk.jpg",
+      "avsie/assets/img/mastan_silk.jpg"
     ],
     "fabricDetails": "100% Premium Combed Cotton, 180 GSM",
     "leadTime": "<2days",
